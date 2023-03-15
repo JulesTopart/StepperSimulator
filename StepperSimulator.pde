@@ -1,25 +1,26 @@
-
-
-int VMAX = 1000, 
-    AMAX = 100;
+float VMAX = 100, 
+      AMAX = 1;
 
 float speedToPixel;
 float stepsToPixel;
 
-Stepper motorA, motorB;
+int time = 0;
+
+Controller controller;
 
 void setup(){
   size(1080, 720);
   
-  motorA = new Stepper(100,100);
-  motorB = new Stepper(300,100);
-  
-  motorA.SetAccel(AMAX);
-  motorA.SetSpeedTarget(VMAX);
-  motorA.SetTarget(1000);
-  
-  speedToPixel = 8000.0/height;
+  speedToPixel = 4000.0/height;
   stepsToPixel = 2000.0/width;
+  
+  controller = new Controller();
+  controller.move(800,400,100);
+  
+  thread("compute"); 
+  thread("updateTime"); 
+
+  
 }
 
 
@@ -28,19 +29,21 @@ void draw(){
   background(200);
   stroke(20);
   noFill();
-  
-  pushMatrix();
-  translate(200,200+ height/2);
-  motorA.Plot();
-  motorB.Plot();
-  popMatrix();
-  
-  motorA.Run();
-  motorB.Run();
-  
-  motorA.Draw();
-  motorB.Draw();
-  
+  controller.Draw();
 
   
+}
+
+void compute(){
+  while(true){
+    controller.Run();
+  }
+}
+
+
+void updateTime(){
+  while(true){
+    time++;
+    for(int i = 0; i < 10000; i++);
+  }
 }
