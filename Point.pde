@@ -12,6 +12,7 @@ ArrayList<Line> toLine(ArrayList<Point> pts){
 }
 
 void drawLines(ArrayList<Line> lines){
+  stroke(0);
   for(Line l : lines){
     l.Draw();
   }
@@ -47,6 +48,7 @@ class Point{
     fill(180,50,0);
     
     point(X,Y);
+    strokeWeight(1);
   }
   
   
@@ -69,7 +71,7 @@ class Line{
   
   void Draw(){
     strokeWeight(1);
-    stroke(52);
+    stroke(0);
     noFill();
     
     line(A.X, A.Y, B.X, B.Y);
